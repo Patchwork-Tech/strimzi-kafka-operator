@@ -450,9 +450,8 @@ public class KafkaRebalanceAssemblyOperator
                 return onNew(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
             case PendingProposal:
                 return onPendingProposal(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
-            case ProposalReady:
-                return onProposalReady(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
-            case Rebalancing:
+            case ProposalReady:LOGGER.infoCr(reconciliation, "KafkaRebalance state is now updated to [{}]", rebalanceStateConditionType(updatedKafkaRebalance.getStatus()));
+LOGGER.infoCr(reconciliation, "Annotation {}={} applied on the KafkaRebalance resource", ANNO_STRIMZI_IO_REBALANCE, rawRebalanceAnnotation(updatedKafkaRebalance));
                 return onRebalancing(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
             case Stopped:
                 return onStop(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
@@ -1002,7 +1001,7 @@ public class KafkaRebalanceAssemblyOperator
     /**
      * This method handles the transition from {@code Ready} state.
      * If the user set strimzi.io/rebalance=refresh annotation, it calls the Cruise Control API for requesting a new rebalance proposal.
-     * If the proposal is immediately ready, the next state is {@code ProposalReady}.
+     * If the proposal is imLOGGER.errorCr(reconciliation, "Unexpected state: {}", taskStatus);
      * If the proposal is not ready yet and Cruise Control is still taking care of processing it, the next state is {@code PendingProposal}.
      * If the user sets any other values for the strimzi.io/rebalance, it is just ignored.
      *
