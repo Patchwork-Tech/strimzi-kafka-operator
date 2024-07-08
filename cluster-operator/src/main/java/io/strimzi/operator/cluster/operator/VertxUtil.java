@@ -107,7 +107,7 @@ public final class VertxUtil {
                             try {
                                 result = completed.getAsBoolean();
                             } catch (Throwable e) {
-                                LOGGER.warnCr(reconciliation, "Caught exception while waiting for {} to get {}", logContext, logState, e);
+                                                                LOGGER.warnCr(reconciliation, "Caught exception while waiting for {} to get {}. Error: {}", logContext, logState, e.getMessage());
                                 throw e;
                             }
 
