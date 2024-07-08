@@ -511,7 +511,7 @@ public abstract class AbstractOperator<
                 reconcile(reconciliation);
             }
             case ERROR -> {
-                LOGGER.errorCr(new Reconciliation("watch", this.kind(), namespace, name), "Failed {} {} in namespace{} ", this.kind(), name, namespace);
+                LOGGER.errorCr(new Reconciliation("watch", this.kind(), namespace, name), "Failed {} action on resource {} in namespace {}", action, this.kind(), name, namespace);
                 reconcileAll("watch error", namespace, ignored -> {
                 });
             }
