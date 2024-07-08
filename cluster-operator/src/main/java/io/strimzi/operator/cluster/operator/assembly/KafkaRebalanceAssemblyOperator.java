@@ -450,9 +450,8 @@ public class KafkaRebalanceAssemblyOperator
                 return onNew(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
             case PendingProposal:
                 return onPendingProposal(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
-            case ProposalReady:
-                return onProposalReady(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
-            case Rebalancing:
+            case ProposalReady:LOGGER.infoCr(reconciliation, "KafkaRebalance state is now updated to [{}]", rebalanceStateConditionType(updatedKafkaRebalance.getStatus()));
+LOGGER.infoCr(reconciliation, "Annotation {}={} applied on the KafkaRebalance resource", ANNO_STRIMZI_IO_REBALANCE, rawRebalanceAnnotation(updatedKafkaRebalance));
                 return onRebalancing(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
             case Stopped:
                 return onStop(reconciliation, host, apiClient, kafkaRebalance, rebalanceOptionsBuilder);
