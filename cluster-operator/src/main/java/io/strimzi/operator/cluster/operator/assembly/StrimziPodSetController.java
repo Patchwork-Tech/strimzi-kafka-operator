@@ -411,7 +411,7 @@ public class StrimziPodSetController implements Runnable {
                     metrics.failedReconciliationsCounter(reconciliation.namespace()).increment();
                 } finally {
                     maybeUpdateStatus(reconciliation, podSet, status);
-                    LOGGER.infoCr(reconciliation, "reconciled");
+                    LOGGER.infoCr(reconciliation, "PodSet {0} in namespace {1} reconciled", name, namespace);
                 }
             }
         } finally   {
