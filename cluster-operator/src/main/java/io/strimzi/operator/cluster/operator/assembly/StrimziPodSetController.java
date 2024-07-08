@@ -406,12 +406,12 @@ public class StrimziPodSetController implements Runnable {
                     status.setCurrentPods(podCounter.currentPods);
                     metrics.successfulReconciliationsCounter(reconciliation.namespace()).increment();
                 } catch (Exception e) {
-                    LOGGER.errorCr(reconciliation, "StrimziPodSet {} in namespace {} reconciliation failed", reconciliation.name(), reconciliation.namespace(), e);
+                    LOGGER.errorCr(reconciliation, "StrimziPodSet {} reconciliation failed", reconciliation.name(), e);
                     status.addCondition(StatusUtils.buildConditionFromException("Error", "true", e));
                     metrics.failedReconciliationsCounter(reconciliation.namespace()).increment();
                 } finally {
                     maybeUpdateStatus(reconciliation, podSet, status);
-                    LOGGER.infoCr(reconciliation, "reconciled");
+                    LOGGER.infoCr(reconciliation, "PodSet reconciled for resource name: {} in namespace: {}", name, namespace);
                 }
             }
         } finally   {
@@ -445,7 +445,7 @@ public class StrimziPodSetController implements Runnable {
                 } else if (e.getCode() == 404) {
                     LOGGER.debugCr(reconciliation, "StrimziPodSet {} in namespace {} was deleted while trying to update status", reconciliation.name(), reconciliation.namespace());
                 } else {
-                    LOGGER.errorCr(reconciliation, "Failed to update status of StrimziPodSet {} in namespace {}", reconciliation.name(), reconciliation.namespace(), e);
+                    LOGGER.errorCr(reconciliation, "Failed to update status of StrimziPodSet {} in namespace {}. Error: {}", reconciliation.name(), reconciliation.namespace(), e.getMessage());
                 }
             }
         }
