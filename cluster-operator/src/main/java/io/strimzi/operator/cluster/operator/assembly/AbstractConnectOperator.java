@@ -765,7 +765,7 @@ public abstract class AbstractConnectOperator<C extends KubernetesClient, T exte
                                     LOGGER.debugCr(reconciliation, "Completed status update");
                                     updateStatusPromise.complete();
                                 } else {
-                                    LOGGER.errorCr(reconciliation, "Failed to update status", updateRes.cause());
+                                    LOGGER.errorCr(reconciliation, "Failed to update status of resource {} due to: {}", fetchedResource.getMetadata().getName(), updateRes.cause());
                                     updateStatusPromise.fail(updateRes.cause());
                                 }
                             });
@@ -775,11 +775,11 @@ public abstract class AbstractConnectOperator<C extends KubernetesClient, T exte
                         }
                     }
                 } else {
-                    LOGGER.errorCr(reconciliation, "Current {} resource not found", resource.getKind());
+                    LOGGER.errorCr(reconciliation, "Current {} resource not found. Attempted to retrieve resource of kind: {}", resource.getKind(), getRes.cause());
                     updateStatusPromise.fail("Current " + resource.getKind() + " resource not found");
                 }
             } else {
-                LOGGER.errorCr(reconciliation, "Failed to get the current {} resource and its status", resource.getKind(), getRes.cause());
+                LOGGER.errorCr(reconciliation, "Failed to get the current {} resource and its status. Error: {}", resource.getKind(), getRes.cause().getMessage());
                 updateStatusPromise.fail(getRes.cause());
             }
         });
