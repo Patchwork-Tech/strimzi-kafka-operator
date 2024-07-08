@@ -134,7 +134,7 @@ public class KafkaBrokerLoggingConfigurationDiff extends AbstractJsonDiff {
                 }
             }
         } catch (Exception e) {
-            LOGGER.errorCr(reconciliation, "Failed to parse logging configuration: " + config, e);
+            LOGGER.errorCr(reconciliation, "Failed to parse logging configuration for reconciliation: " + config + ", error: " + e.getMessage(), e);
             return Collections.emptyMap();
         }
 
