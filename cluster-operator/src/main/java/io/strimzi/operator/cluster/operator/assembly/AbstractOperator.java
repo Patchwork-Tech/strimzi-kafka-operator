@@ -283,7 +283,7 @@ public abstract class AbstractOperator<
                 LOGGER.errorCr(reconciliation, "createOrUpdate failed", e.getCause());
                 updateStatus(reconciliation, status).onComplete(statusResult -> createOrUpdate.fail(e.getCause()));
             } else {
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", res.cause());
+                LOGGER.errorCr(reconciliation, "Failed to create or update {} {}", e.getMessage());
                 createOrUpdate.fail(res.cause());
             }
         });
