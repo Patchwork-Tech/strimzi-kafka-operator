@@ -280,10 +280,10 @@ public abstract class AbstractOperator<
                 S status = (S) e.getStatus();
                 StatusUtils.addConditionsToStatus(status, unknownAndDeprecatedConditions);
 
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", e.getCause());
+                                LOGGER.errorCr(reconciliation, "Failed to create or update resource {} in namespace {}. Operation failed", name, namespace, e.getCause());
                 updateStatus(reconciliation, status).onComplete(statusResult -> createOrUpdate.fail(e.getCause()));
             } else {
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", res.cause());
+                LOGGER.errorCr(reconciliation, "Failed to create or update {} {}", e.getMessage());
                 createOrUpdate.fail(res.cause());
             }
         });
@@ -511,7 +511,7 @@ public abstract class AbstractOperator<
                 reconcile(reconciliation);
             }
             case ERROR -> {
-                LOGGER.errorCr(new Reconciliation("watch", this.kind(), namespace, name), "Failed {} {} in namespace{} ", this.kind(), name, namespace);
+                LOGGER.errorCr(new Reconciliation("watch", this.kind(), namespace, name), "Failed {} action on resource {} in namespace {}", action, this.kind(), name, namespace);
                 reconcileAll("watch error", namespace, ignored -> {
                 });
             }
