@@ -267,7 +267,7 @@ public class NodePoolUtils {
             String removeNodeIds = Annotations.stringAnnotation(pool, Annotations.ANNO_STRIMZI_IO_REMOVE_NODE_IDS, null);
             if (removeNodeIds != null
                     && !NodeIdRange.isValidNodeIdRange(removeNodeIds))    {
-                LOGGER.warnCr(reconciliation, "Invalid annotation {} on KafkaNodePool {} with value {}", Annotations.ANNO_STRIMZI_IO_REMOVE_NODE_IDS, pool.getMetadata().getName(), nextNodeIds);
+                                LOGGER.warnCr(reconciliation, 'Invalid annotation {} on KafkaNodePool {} with value {}', Annotations.ANNO_STRIMZI_IO_REMOVE_NODE_IDS, pool.getMetadata().getName(), removeNodeIds);
             }
         });
     }
