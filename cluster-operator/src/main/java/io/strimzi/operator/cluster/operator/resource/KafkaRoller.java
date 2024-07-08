@@ -507,7 +507,7 @@ public class KafkaRoller {
                     restartContext.restartReasons.add(RestartReason.POD_FORCE_RESTART_ON_ERROR);
                     restartAndAwaitReadiness(pod, operationTimeoutMs, TimeUnit.MILLISECONDS, restartContext);
                 } else {
-                    LOGGER.warnCr(reconciliation, "Pod {} can't be safely force-rolled; original error: ", nodeRef, e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+                    LOGGER.warnCr(reconciliation, "Pod {} can't be safely force-rolled; original error: {}", nodeRef, e.getCause() != null ? e.getCause().getMessage() : e.getMessage())
                     throw e;
                 }
             } else {
@@ -740,7 +740,7 @@ public class KafkaRoller {
         KafkaFuture<Void> brokerLoggingConfigFuture = alterConfigResult.values().get(Util.getBrokersLogging(podId));
         await(VertxUtil.kafkaFutureToVertxFuture(reconciliation, vertx, brokerConfigFuture), 30, TimeUnit.SECONDS,
             error -> {
-                LOGGER.errorCr(reconciliation, "Error updating broker configuration for pod {}", nodeRef, error);
+                LOGGER.errorCr(reconciliation, "Error updating broker configuration for pod {} due to: {}", nodeRef, error.getMessage());
                 return new ForceableProblem("Error updating broker configuration for pod " + nodeRef, error);
             });
         await(VertxUtil.kafkaFutureToVertxFuture(reconciliation, vertx, brokerLoggingConfigFuture), 30, TimeUnit.SECONDS,
