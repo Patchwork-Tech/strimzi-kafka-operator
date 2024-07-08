@@ -56,7 +56,7 @@ public class ReconnectingWatcher<T extends HasMetadata> implements Watcher<T> {
 
     @Override
     public void onClose(WatcherException e) {
-        LOGGER.warnOp("Watch for resource {} in namespace {} with selector {} failed and will be reconnected", kind, namespace, selector,  e);
+                LOGGER.warnOp("Watch for resource {} in namespace {} with selector {} failed and will be reconnected. Exception: {}", kind, namespace, selector, e.getMessage());
         watch = createWatch(); // We recreate the watch
     }
 
