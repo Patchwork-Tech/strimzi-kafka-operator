@@ -145,7 +145,7 @@ public class KafkaConnectAssemblyOperator extends AbstractConnectOperator<Kubern
             connect = KafkaConnectCluster.fromCrd(reconciliation, kafkaConnect, versions, sharedEnvironmentProvider);
             build = KafkaConnectBuild.fromCrd(reconciliation, kafkaConnect, versions, sharedEnvironmentProvider);
         } catch (Exception e) {
-            LOGGER.warnCr(reconciliation, e);
+            LOGGER.warnCr("An error occurred during Kafka Connect cluster creation or update for reconciliation: " + reconciliation.toString(), e);
             StatusUtils.setStatusConditionAndObservedGeneration(kafkaConnect, kafkaConnectStatus, e);
             return Future.failedFuture(new ReconciliationException(kafkaConnectStatus, e));
         }
