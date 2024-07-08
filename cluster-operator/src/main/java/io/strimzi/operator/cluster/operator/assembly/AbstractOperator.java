@@ -280,7 +280,7 @@ public abstract class AbstractOperator<
                 S status = (S) e.getStatus();
                 StatusUtils.addConditionsToStatus(status, unknownAndDeprecatedConditions);
 
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", e.getCause());
+                                LOGGER.errorCr(reconciliation, "Failed to create or update resource {} in namespace {}. Operation failed", name, namespace, e.getCause());
                 updateStatus(reconciliation, status).onComplete(statusResult -> createOrUpdate.fail(e.getCause()));
             } else {
                 LOGGER.errorCr(reconciliation, "createOrUpdate failed", res.cause());
