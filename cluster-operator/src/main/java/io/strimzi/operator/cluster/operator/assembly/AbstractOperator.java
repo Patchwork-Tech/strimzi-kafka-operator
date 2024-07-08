@@ -280,10 +280,10 @@ public abstract class AbstractOperator<
                 S status = (S) e.getStatus();
                 StatusUtils.addConditionsToStatus(status, unknownAndDeprecatedConditions);
 
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", e.getCause());
+                LOGGER.errorCr(reconciliation, "Failed to perform createOrUpdate operation", e.getCause());
                 updateStatus(reconciliation, status).onComplete(statusResult -> createOrUpdate.fail(e.getCause()));
             } else {
-                LOGGER.errorCr(reconciliation, "createOrUpdate failed", res.cause());
+                LOGGER.errorCr(reconciliation, "Failed to create or update resource", e.getCause());
                 createOrUpdate.fail(res.cause());
             }
         });
@@ -355,7 +355,7 @@ public abstract class AbstractOperator<
                             return Future.succeededFuture();
                         }
                     } else {
-                        LOGGER.errorCr(reconciliation, "Current {} resource not found", reconciliation.kind());
+                        LOGGER.errorCr(reconciliation, "Current {} resource not found. Attempted to get {} resource with name {}", reconciliation.kind(), reconciliation.kind(), name);
                         return Future.failedFuture("Current " + reconciliation.kind() + " resource with name " + name + " not found");
                     }
                 }, error -> {
@@ -429,7 +429,7 @@ public abstract class AbstractOperator<
         try {
             return callable.call();
         } catch (Throwable ex) {
-            LOGGER.errorCr(reconciliation, "Reconciliation failed", ex);
+            LOGGER.errorCr("Attempted reconciliation: " + reconciliation.getName() + ". Error: " + ex.getMessage(), ex);
             return Future.failedFuture(ex);
         }
     }
