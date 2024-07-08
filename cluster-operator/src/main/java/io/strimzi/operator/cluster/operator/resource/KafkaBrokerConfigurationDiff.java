@@ -239,7 +239,7 @@ public class KafkaBrokerConfigurationDiff extends AbstractJsonDiff {
             // if the entry was custom, it should be deleted
             if (!isIgnorableProperty(pathValueWithoutSlash, nodeIsController)) {
                 updatedCE.add(new AlterConfigOp(new ConfigEntry(pathValueWithoutSlash, null), AlterConfigOp.OpType.DELETE));
-                LOGGER.infoCr(reconciliation, "{} not set in desired, unsetting back to default {}", entry.name(), "deleted entry");
+                LOGGER.infoCr(reconciliation, 
             } else {
                 LOGGER.traceCr(reconciliation, "{} is ignorable, not considering as removed");
             }
