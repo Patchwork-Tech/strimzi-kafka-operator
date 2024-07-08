@@ -507,7 +507,7 @@ public class KafkaRoller {
                     restartContext.restartReasons.add(RestartReason.POD_FORCE_RESTART_ON_ERROR);
                     restartAndAwaitReadiness(pod, operationTimeoutMs, TimeUnit.MILLISECONDS, restartContext);
                 } else {
-                    LOGGER.warnCr(reconciliation, "Pod {} can't be safely force-rolled; original error: ", nodeRef, e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+                    LOGGER.warnCr(reconciliation, "Pod {} can't be safely force-rolled; original error: {}", nodeRef, e.getCause() != null ? e.getCause().getMessage() : e.getMessage())
                     throw e;
                 }
             } else {
