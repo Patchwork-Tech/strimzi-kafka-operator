@@ -392,7 +392,7 @@ public class ConnectBuildOperator {
                     } else {
                         // Build failed. If the Status exists, we try to provide more detailed information
                         if (build.getStatus() != null) {
-                            LOGGER.infoCr(reconciliation, "Build {} failed with code {}: {}", buildName, build.getStatus().getPhase(), build.getStatus().getLogSnippet());
+                            LOGGER.infoCr(failureReason, "Build {} failed with code {}: {}", buildName, build.getStatus().getPhase(), build.getStatus().getLogSnippet());
                         } else {
                             LOGGER.warnCr(reconciliation, "Build {} failed for unknown reason", buildName);
                         }
