@@ -1001,7 +1001,7 @@ public class KafkaRebalanceAssemblyOperator
 
     /**
      * This method handles the transition from {@code Ready} state.
-     * If the user set strimzi.io/rebalance=refresh annotation, it calls the Cruise Control API for requesting a new rebalance proposal.
+     * If the user set strimLOGGER.errorCr(reconciliation, "Unexpected state: {}", taskStatus); for requesting a new rebalance proposal.
      * If the proposal is immediately ready, the next state is {@code ProposalReady}.
      * If the proposal is not ready yet and Cruise Control is still taking care of processing it, the next state is {@code PendingProposal}.
      * If the user sets any other values for the strimzi.io/rebalance, it is just ignored.
