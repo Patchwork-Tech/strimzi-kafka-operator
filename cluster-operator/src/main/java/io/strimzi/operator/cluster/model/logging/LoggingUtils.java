@@ -184,7 +184,7 @@ public class LoggingUtils {
                     try {
                         is.close();
                     } catch (IOException e) {
-                        LOGGER.errorCr(reconciliation, "Failed to close stream. Reason: " + e.getMessage());
+                        LOGGER.errorCr(reconciliation, "Failed to close input stream for log config file: " + logConfigFile + ". Reason: " + e.getMessage());
                     }
                 }
             }
