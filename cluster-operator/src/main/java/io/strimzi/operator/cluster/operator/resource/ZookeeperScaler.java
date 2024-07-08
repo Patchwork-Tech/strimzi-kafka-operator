@@ -154,7 +154,7 @@ public class ZookeeperScaler implements AutoCloseable {
                 .onSuccess(nothing -> connected.complete(zkAdmin))
                 .onFailure(cause -> {
                     String message = String.format("Failed to connect to Zookeeper %s. Connection was not ready in %d ms.", zookeeperConnectionString, operationTimeoutMs);
-                    LOGGER.warnCr(reconciliation, message);
+                                        LOGGER.warnCr(reconciliation, "Failed to connect to {} to scale Zookeeper", zookeeperConnectionString, e);
 
                     closeConnection(zkAdmin)
                         .onComplete(nothing -> connected.fail(new ZookeeperScalingException(message, cause)));
