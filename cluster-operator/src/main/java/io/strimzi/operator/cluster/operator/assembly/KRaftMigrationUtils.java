@@ -88,7 +88,7 @@ public class KRaftMigrationUtils {
                     .onSuccess(v -> connected.complete(zkAdmin))
                     .onFailure(cause -> {
                         String message = String.format("Failed to connect to ZooKeeper %s. Connection was not ready in %d ms.", zkConnectionString, operationTimeoutMs);
-                        LOGGER.warnCr(reconciliation, message);
+                        LOGGER.warnCr(reconciliation, "Failed to connect to Zookeeper {}. Error: {}", zkConnectionString, e);
 
                         closeZooKeeperConnection(reconciliation, vertx, zkAdmin, trustStoreFile, keyStoreFile, operationTimeoutMs)
                                 .onComplete(nothing -> connected.fail(new RuntimeException(message, cause)));
