@@ -903,7 +903,7 @@ public class KafkaReconciler {
                         String bootstrapHostname = KafkaResources.bootstrapServiceName(reconciliation.name()) + "." + reconciliation.namespace() + ".svc:" + KafkaCluster.REPLICATION_PORT;
                         LOGGER.debugCr(reconciliation, "Creating AdminClient for clusterId using {}", bootstrapHostname);
                         kafkaAdmin = adminClientProvider.createAdminClient(bootstrapHostname, this.coTlsPemIdentity.pemTrustSet(), this.coTlsPemIdentity.pemAuthIdentity());
-                        kafkaStatus.setClusterId(kafkaAdmin.describeCluster().clusterId().get());
+                        LOGGER.debugCr(reconciliation, "Attempt to get clusterId and handle exceptions");
                     } catch (KafkaException e) {
                         LOGGER.warnCr(reconciliation, "Kafka exception getting clusterId {}", e.getMessage());
                     } catch (InterruptedException e) {
