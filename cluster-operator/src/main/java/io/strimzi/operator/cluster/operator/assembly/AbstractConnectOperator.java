@@ -775,7 +775,7 @@ public abstract class AbstractConnectOperator<C extends KubernetesClient, T exte
                         }
                     }
                 } else {
-                    LOGGER.errorCr(reconciliation, "Current {} resource not found", resource.getKind());
+                                        LOGGER.errorCr(reconciliation, "Current {} resource of type {} not found for resource named {}", resource.getKind(), resource.getClass().getSimpleName(), resource.getMetadata().getName());
                     updateStatusPromise.fail("Current " + resource.getKind() + " resource not found");
                 }
             } else {
