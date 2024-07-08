@@ -341,7 +341,7 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator<KubernetesCl
                                         LOGGER.debugCr(reconciliation, "Completed status update");
                                         updateStatusPromise.complete();
                                     } else {
-                                        LOGGER.errorCr(reconciliation, "Failed to update status", updateRes.cause());
+                                        LOGGER.errorCr(reconciliation, "Failed to update status for Kafka resource with name: {}", updateRes.cause(), name);
                                         updateStatusPromise.fail(updateRes.cause());
                                     }
                                 });
@@ -882,12 +882,12 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator<KubernetesCl
         switch (action) {
             case ADDED, DELETED, MODIFIED -> maybeEnqueueReconciliation(action, resource);
             case ERROR -> {
-                LOGGER.errorCr(new Reconciliation("watch", resource.getKind(), namespace, name), "Error action: {} {} in namespace {} ", resource.getKind(), namespace, name);
+                LOGGER.errorCr(new Reconciliation("watch", resource.getKind(), namespace, name), "Error encountered while performing action: {} on {} in namespace {}. Error details: <provide_specific_error_details_here>", action, resource.getKind(), namespace, name)
                 reconcileAll("watch error", namespace, ignored -> {
                 });
             }
             default -> {
-                LOGGER.errorCr(new Reconciliation("watch", resource.getKind(), namespace, name), "Unknown action: {} in namespace {}", resource.getKind(), namespace, name);
+                LOGGER.errorCr(new Reconciliation("watch", resource.getKind(), namespace, name), "Unknown action: {} in namespace {}", action, namespace);
                 reconcileAll("watch unknown", namespace, ignored -> {
                 });
             }
