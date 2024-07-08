@@ -107,7 +107,7 @@ public final class VertxUtil {
                             try {
                                 result = completed.getAsBoolean();
                             } catch (Throwable e) {
-                                LOGGER.warnCr(reconciliation, "Caught exception while waiting for {} to get {}", logContext, logState, e);
+                                                                LOGGER.warnCr(reconciliation, "Caught exception while waiting for {} to get {}. Error: {}", logContext, logState, e.getMessage());
                                 throw e;
                             }
 
@@ -129,7 +129,7 @@ public final class VertxUtil {
                                     long timeLeft = deadline - System.currentTimeMillis();
                                     if (timeLeft <= 0) {
                                         String exceptionMessage = String.format("Exceeded timeout of %dms while waiting for %s to be %s", timeoutMs, logContext, logState);
-                                        LOGGER.errorCr(reconciliation, exceptionMessage);
+                                        LOGGER.errorCr(reconciliation, "Exceeded timeout of {0}ms while waiting for {1} to be {2}", timeoutMs, logContext, logState);
                                         promise.fail(new TimeoutException(exceptionMessage));
                                     } else {
                                         // Schedule ourselves to run again
