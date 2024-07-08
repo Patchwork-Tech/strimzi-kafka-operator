@@ -56,7 +56,7 @@ public class ConfigMapOperator extends AbstractNamespacedResourceOperator<Kubern
                 return super.internalUpdate(reconciliation, namespace, name, current, desired);
             }
         } catch (Exception e) {
-            LOGGER.errorCr(reconciliation, "Caught exception while patching {} {} in namespace {}", resourceKind, name, namespace, e);
+            LOGGER.errorCr(reconciliation, "Error patching {} {} in namespace {}: {}", resourceKind, name, namespace, e.getMessage());
             return Future.failedFuture(e);
         }
     }
