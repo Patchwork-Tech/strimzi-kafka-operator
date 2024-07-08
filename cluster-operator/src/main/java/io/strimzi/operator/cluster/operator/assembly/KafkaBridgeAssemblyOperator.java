@@ -76,7 +76,7 @@ public class KafkaBridgeAssemblyOperator extends AbstractAssemblyOperator<Kubern
         try {
             bridge = KafkaBridgeCluster.fromCrd(reconciliation, assemblyResource, sharedEnvironmentProvider);
         } catch (Exception e) {
-            LOGGER.warnCr(reconciliation, e);
+            LOGGER.warnCr("Failed to create or update Kafka Bridge cluster in namespace {0}", reconciliation.namespace(), e.getMessage());
             StatusUtils.setStatusConditionAndObservedGeneration(assemblyResource, kafkaBridgeStatus, e);
             return Future.failedFuture(new ReconciliationException(kafkaBridgeStatus, e));
         }
